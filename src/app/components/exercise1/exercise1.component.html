@@ -1,0 +1,40 @@
+<h1>Exercise 1</h1>
+<div class="col-sm-12">
+  <p>
+      <b>Input Format</b><br>
+      First line contains T that denotes the number of test cases.<br>
+      First line of each test case will contain two integers N & K.<br>
+      Second line of each test case will contain a N digit integer.<br>
+  </p>
+</div>
+<br>
+<div class="form-group required">
+  <label for="testCase">Test case</label>
+  <textarea class="form-control" id="testCase" rows="5" [(ngModel)]="testCase" required></textarea>
+
+</div>
+<div class="form-group">
+  <button
+    class="btn btn-primary"
+    (click)="solve()"
+    [disabled]="!testCase || solving">
+    Resolver
+  </button>
+</div>
+<div *ngIf="error"
+  class="row p-2">
+  <div class="col-sm-12">
+    <div class="alert alert-danger">
+      {{ error }}<br>
+      Fix errors before we can continue
+    </div>
+  </div>
+</div>
+<div *ngIf="solution"
+  class="row p-2">
+  <div class="col-sm-12">
+    <div class="alert alert-primary">
+      {{ solution }}<br>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+.table td{
+    text-align: center;  
+}
+.table td fa {
+    cursor: pointer;
+}
