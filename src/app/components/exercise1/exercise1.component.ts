@@ -9,12 +9,13 @@ export class Exercise1Component implements OnInit {
 
   public testCase: any;
   public lines: any;
-  public solution: string;
+  public solutions: any;
 
   public error: string;
   public solving: Boolean = false;
 
   constructor() {
+    this.solutions = [];
   }
 
   ngOnInit() {
@@ -23,40 +24,78 @@ export class Exercise1Component implements OnInit {
   public solve() {
     this.solving = true;
     this.error = '';
+    this.solutions = [];
 
     this.lines = this.testCase.trim().split("\n");
 
     this.validateTestCase(this.lines)
-      .then(() => {
-        this.solution = 'Solution';
+      .then((response) => {
+        const testCases = response;
+
+        for (let i = 0; i < testCases.length; i = i + 2) {
+          let rules = response[i].split(' ');
+          let n = parseInt(rules[0]);
+          let k = parseInt(rules[1]);
+          let val = response[i + 1];
+
+          this.evaluateCase(n, k, val)
+            .then((response) => {
+              this.solutions.push(response);
+            })
+            .catch((error) => {
+              this.error = error;
+              this.solutions = [];
+              return;
+            });
+        }
       })
       .catch((error) => {
         this.error = error;
-        this.solution = '';
+        this.solutions = [];
       });
 
     this.solving = false;
   }
 
-  public evaluateCase(n, k, value) {
-    let top = 0;
+  public evaluateCase(n, k, testCase) {
+    return new Promise((resolve, reject) => {
+        let top = 0;
+        let start = 0;
+        let limit = k;
 
+        if (testCase.length != n) {
+          reject('The number of digits for test case: ' + testCase + ' must be ' + n);
+        }
 
+        while (limit <= n) {
+          let val = testCase.substr(start, k);
+          let result = 1;
 
-    return top;
+          for (let i = 0; i < k; i++) {
+            result *= val[i];
+          }
+
+          top = result > top ? result : top;
+
+          start++;
+          limit++;
+        }
+
+        resolve(top);
+      }
+    );
   }
 
   public validateTestCase(testCases) {
     return new Promise(
       function (resolve, reject) {
-        const t = testCases.shift();
-
-        if (isNaN(t)) {
-          reject('Alphabetic characters are not allowed');
+        const t = testCases.shift().trim();
+        if (!t || isNaN(t)) {
+          reject('Alphabetic characters or white spaces are not allowed in first line.');
         }
 
         if (t < 1 || t > 100) {
-          reject('The number of test cases must between 1 and 100');
+          reject('The number of test cases must between 1 and 100.');
         }
 
         if (testCases.length / t !== 2) {
@@ -65,34 +104,34 @@ export class Exercise1Component implements OnInit {
 
         testCases.forEach((element, index) => {
           if (index % 2 == 0) {
-            let rules = element.split(' ');
+            let rules = element.trim().split(' ');
 
             if (rules.length !== 2) {
-              reject('Two values are required for test number ' + (index + 1) + ' rules');
+              reject('Two values are required for test number ' + (index + 1) + ' rules.');
             }
 
-            let n = rules[0];
-            let k = rules[1];
+            let n = parseInt(rules[0]);
+            let k = parseInt(rules[1]);
 
             if (isNaN(k) || isNaN(n)) {
-              reject('Alphabetic characters are not allowed');
+              reject('Alphabetic characters are not allowed.');
             }
 
             if (k < 1 || k > 7) {
-              reject('The number of consecutive digits set for the case number ' + (index + 1) + ' is not valid');
+              reject('The number of consecutive digits set for the case number ' + (index + 1) + ' is not valid.');
             }
 
             if (n < k || n > 1000) {
-              reject('The number of digits set for the case number ' + (index + 1) + ' is not valid ' + n + ' - ' + k);
+              reject('The number of digits set for the case number ' + (index + 1) + ' is not valid.');
             }
           } else {
             if (isNaN(element)) {
-              reject('Alphabetic characters are not allowed');
+              reject('Alphabetic characters are not allowed.');
             }
           }
         });
 
-        resolve(true);
+        resolve(testCases);
       }
     );
   }

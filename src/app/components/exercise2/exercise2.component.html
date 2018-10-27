@@ -1,9 +1,42 @@
-<h1>Ejercicio 2</h1>
-<div class="col-sm-offset-9 col-sm-3">
-  <button type="button" class="btn button-generic" (click)="solve()">Resolver</button>
+<h1>Exercise 2</h1>
+<div class="col-sm-12">
+  <p>
+      <b>Input Format</b><br>
+      First line contains T that denotes the number of test cases.<br>
+      This is followed by T lines, each containing an integer, N.
+  </p>
 </div>
 <br>
-<div class="row form-group">
-  <label for="testCase">Caso de prueba</label>
-  <textarea class="form-control" id="testCase" rows="5" [(ngModel)]="testCase"></textarea>
+<div class="form-group required">
+  <label for="testCase">Test case</label>
+  <textarea class="form-control" id="testCase" rows="5" [(ngModel)]="testCase" required></textarea>
+
+</div>
+<div class="form-group">
+  <button
+    class="btn btn-primary"
+    (click)="solve()"
+    [disabled]="!testCase || solving">
+    Resolver
+  </button>
+</div>
+<div *ngIf="error"
+  class="row p-2">
+  <div class="col-sm-12">
+    <div class="alert alert-danger">
+      {{ error }}<br>
+      Fix errors before we can continue
+    </div>
+  </div>
+</div>
+<div *ngIf="solutions.length > 0"
+  class="row p-2">
+  <div class="col-sm-12">
+    <div class="alert alert-primary">
+      Solution:
+      <ul>
+        <li *ngFor="let solution of solutions">{{ solution }}</li>
+      </ul>
+    </div>
+  </div>
 </div>

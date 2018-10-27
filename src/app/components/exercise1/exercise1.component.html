@@ -30,11 +30,14 @@
     </div>
   </div>
 </div>
-<div *ngIf="solution"
+<div *ngIf="solutions.length > 0"
   class="row p-2">
   <div class="col-sm-12">
     <div class="alert alert-primary">
-      {{ solution }}<br>
+      Solution:
+      <ul>
+        <li *ngFor="let solution of solutions">{{ solution }}</li>
+      </ul>
     </div>
   </div>
 </div>
