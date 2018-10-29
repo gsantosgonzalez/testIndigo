@@ -4,7 +4,7 @@ import { Book } from '../../Book';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-books',
+  selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
