@@ -5,8 +5,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ```server
 $ git clone https://github.com/gsantosgonzalez/testIndigo
-cd testIndigo
-npm start
+$ cd testIndigo
+$ npm start
 ```
 
 In your web explorer navigate to http://localhost:4200
