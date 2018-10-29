@@ -24,24 +24,19 @@ export class Exercise2Component implements OnInit {
   public solve() {
     this.solving = true;
     this.error = '';
+    this.solutions = [];
 
     this.lines = this.testCase.trim().split("\n");
 
     this.validateTestCase(this.lines)
       .then((response) => {
-        const testCases = response;
+        const testCases = Object.values(response);
 
         for (let testCase of testCases) {
-          this.evaluateCase(testCase)
-            .then((response) => {
-              this.solutions.push(response);
-
-              this.solving = false;
-            })
-            .catch((error) => {
-              this.error = error;
-            });
+          this.solutions.push(this.evaluateCase(testCase));
         }
+
+        this.solving = false;
       })
       .catch((error) => {
         this.error = error;
@@ -50,12 +45,17 @@ export class Exercise2Component implements OnInit {
   }
 
   public evaluateCase(testCase) {
-    return new Promise((resolve, reject) => {
-        for (let number = parseInt(testCase); number > 101101; number--) {
-
+    for (let number = parseInt(testCase); number >= 101101; number--) {
+      if (this.isPalindrome(number)) {
+        for (let factor = 999; factor >= 100; factor--) {
+          if (number%factor === 0) {
+            if ((number / factor) > 100 && (number / factor) < 1000) {
+              return number; // return number + ' = ' + factor + ' * ' + number/factor;
+            }
+          }
         }
       }
-    );
+    }
   }
 
   public validateTestCase(testCases) {
@@ -75,14 +75,14 @@ export class Exercise2Component implements OnInit {
         }
 
         testCases.forEach((element, index) => {
-          const testCase = element.trim();
+          const testCase = parseInt(element.trim());
 
           if (!testCase || isNaN(testCase)) {
             reject('Alphabetic characters or white spaces are not allowed.');
           }
 
-          if (element < 101101 || element > 1000000) {
-            reject('Test case value must be between 101101 and 1000000.');
+          if (testCase < 101101 || testCase > 1000000) {
+            reject('Value of test case ' + (index + 1) + ' must be between 101101 and 1000000.');
           }
         });
 
@@ -102,11 +102,16 @@ export class Exercise2Component implements OnInit {
     return false;
   }
 
-  protected reverseString(str): String {
+  protected reverseString(number): String {
+    let str = number.toString();
     let splitString = str.split("");
     let reverseArray = splitString.reverse();
     let reversed = reverseArray.join("");
 
     return reversed;
-}
+  }
+
+  public changeSolving(event) {
+    this.solving = false;
+  }
 }

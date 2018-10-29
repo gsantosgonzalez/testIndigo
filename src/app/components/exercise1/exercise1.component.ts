@@ -30,7 +30,7 @@ export class Exercise1Component implements OnInit {
 
     this.validateTestCase(this.lines)
       .then((response) => {
-        const testCases = response;
+        const testCases = Object.values(response);
 
         for (let i = 0; i < testCases.length; i = i + 2) {
           let rules = response[i].split(' ');

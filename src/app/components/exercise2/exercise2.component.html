@@ -9,7 +9,13 @@
 <br>
 <div class="form-group required">
   <label for="testCase">Test case</label>
-  <textarea class="form-control" id="testCase" rows="5" [(ngModel)]="testCase" required></textarea>
+  <textarea
+    class="form-control"
+    id="testCase" rows="5"
+    [(ngModel)]="testCase"
+    (ngModelChange)="changeSolving($event)"
+    required>
+  </textarea>
 
 </div>
 <div class="form-group">
