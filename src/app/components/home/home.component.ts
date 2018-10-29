@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Book } from '../../Book';
-import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

@@ -6,6 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ```server
 $ git clone https://github.com/gsantosgonzalez/testIndigo
 $ cd testIndigo
+$ npm install
 $ npm start
 ```
 
