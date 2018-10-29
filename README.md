@@ -3,7 +3,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Run project
 
-´´´server
+´´´bash
 git clone https://github.com/gsantosgonzalez/testIndigo
 cd testIndigo/
 npm start
